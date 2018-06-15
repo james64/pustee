@@ -1,0 +1,10 @@
+apply plugin: 'scala'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  compile 'org.jupyter-scala:kernel_2.12:0.4.1' 
+}
+
