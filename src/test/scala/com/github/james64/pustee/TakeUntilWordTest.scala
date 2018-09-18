@@ -1,9 +1,12 @@
 package com.github.james64.pustee
 
 import com.github.james64.pustee.TakeUntilWord.{NoWord, Taken}
+import org.junit.runner.RunWith
 import org.scalatest.FunSuite
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.prop.TableDrivenPropertyChecks
 
+@RunWith(classOf[JUnitRunner])
 class TakeUntilWordTest extends FunSuite with TableDrivenPropertyChecks {
 
   test("Generate fail shifts") {
