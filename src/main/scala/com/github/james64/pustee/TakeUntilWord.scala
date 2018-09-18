@@ -68,7 +68,7 @@ case class TakeUntilWord(word: String) {
     if(char == word(wordPos)) {
       if(wordPos + 1 == word.length)
         // whole WORD matched
-        Taken(outputAcc.mkString, rest)
+        Taken(outputAcc.mkString)
       else if(rest.isEmpty)
         // partial match of WORD and no further input
         NoWord(outputAcc.mkString ++ word.substring(0, wordPos+1))
@@ -96,5 +96,5 @@ object TakeUntilWord {
   sealed trait Result
 
   case class NoWord(output: String) extends Result
-  case class Taken(output: String, rest: Iterator[Char]) extends Result
+  case class Taken(output: String) extends Result
 }
