@@ -36,7 +36,7 @@ case class TakeUntilWord(word: String) {
     * For greater indexes there are two possibilities. Either we are able to make last longest (potentially empty)
     * prefix longer or we need to start over with empty prefix.
     */
-  val prefixLengths : Stream[Int] = 0 #:: 0 #:: prefixLengths.zipWithIndex.tail.map {
+  def prefixLengths : Stream[Int] = 0 #:: 0 #:: prefixLengths.zipWithIndex.tail.map {
     case (lastLn, lastIndex) => if(word(lastLn) == word(lastIndex)) lastLn + 1 else 0
   }
 
