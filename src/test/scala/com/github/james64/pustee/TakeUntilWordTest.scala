@@ -51,9 +51,10 @@ class TakeUntilWordTest extends FunSuite with TableDrivenPropertyChecks {
 
     forAll(data) {
       (word, input, expectedOutput, expectedRest) => {
-        val Taken(actualOutput, actualRestIter) = TakeUntilWord(word).take(input.iterator)
+        val iter = input.iterator
+        val Taken(actualOutput) = TakeUntilWord(word).take(iter)
         assert {
-          (expectedOutput, expectedRest) === (actualOutput, actualRestIter.mkString)
+          (expectedOutput, expectedRest) === (actualOutput, iter.mkString)
         }
       }
     }
