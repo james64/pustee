@@ -56,6 +56,7 @@ object ReplProcess {
                                            promptWaiter: TakeUntilWord) extends ReplProcess {
 
     override def runInRepl(code: String): String = {
+      // todo this is scala specific
       val wrappedCode =
         s"""
            |:paste
