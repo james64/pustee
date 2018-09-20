@@ -22,11 +22,12 @@ object ReplProcess {
       .map(Redirect.appendTo)
       .foreach(procBuilder.redirectError)
 
-    // todo stderr > /dev/null if errLogFile is null
-
-    // todo support custom env variables here
-
     val proc = procBuilder.start
+
+    if(stdErrFilePath.isEmpty) {
+      dropStdErr(proc)
+    }
+
     val cmdOutputReader = new InputStreamReader(new BufferedInputStream(proc.getInputStream))
     val cmdOutputIter = Iterator.continually(cmdOutputReader.read.toChar)
     val promptWaiter = TakeUntilWord(prompt)
@@ -43,6 +44,11 @@ object ReplProcess {
       case NoWord(out) => throw new Error(out)
     }
   }
+
+  private def dropStdErr(p: Process): Unit = new Thread(() => {
+    val es = p.getErrorStream
+    while (es.read != -1) {}
+  }).start()
 
   private class HisAsOposedToMyReplProcess(proc: Process,
                                            userInputWriter: OutputStreamWriter,
