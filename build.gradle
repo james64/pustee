@@ -12,10 +12,14 @@ apply plugin: 'scala'
 
 repositories {
     mavenCentral()
+    maven {
+        url  "https://jetbrains.bintray.com/pty4j"
+    }
 }
 
 dependencies {
     compile 'org.jupyter-scala:kernel_2.12:0.4.1'
+    compile 'org.jetbrains.pty4j:pty4j:0.9.3'
 
     testCompile 'org.scalatest:scalatest_2.12:3.0.5'
     testCompile 'junit:junit:4.11'
