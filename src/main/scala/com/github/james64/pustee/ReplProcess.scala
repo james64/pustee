@@ -12,6 +12,7 @@ trait ReplProcess {
   def destroy() : Unit
 }
 
+// todo get rid of this and use pty4j to run scala repl
 object ReplProcess {
 
   def start(systemCmd: String, prompt: String, stdErrFilePath: Option[String] = None): (String, ReplProcess) = {
@@ -56,7 +57,6 @@ object ReplProcess {
                                            promptWaiter: TakeUntilWord) extends ReplProcess {
 
     override def runInRepl(code: String): String = {
-      // todo this is scala specific
       val wrappedCode =
         s"""
            |:paste
