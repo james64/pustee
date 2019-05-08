@@ -1,7 +1,7 @@
 package com.github.james64.pustee
 
 import jupyter.kernel.interpreter.Interpreter.NoValue
-import jupyter.kernel.interpreter.{Interpreter, InterpreterKernel}
+import jupyter.kernel.interpreter.Interpreter
 import jupyter.kernel.protocol.{ParsedMessage, ShellReply}
 import jupyter.kernel.protocol.ShellReply.KernelInfo.LanguageInfo
 import jupyter.kernel.server.{ServerApp, ServerAppOptions}
@@ -14,9 +14,7 @@ object PusteeApp {
       id = "random id",
       name = "Pustee name",
       language = "spark-scala",
-      kernel = new InterpreterKernel {
-        override def apply(): Interpreter = PusteeInterpreter
-      },
+      kernel = () => PusteeInterpreter,
       progPath = "/home/dubovsky/github/james64/pustee/build/libs/pustee-all.jar",
       isJar = true,
       options = ServerAppOptions(
