@@ -1,7 +1,7 @@
 package com.github.james64.pustee
 
-import jupyter.kernel.interpreter.Interpreter.NoValue
-import jupyter.kernel.interpreter.Interpreter
+import jupyter.kernel.interpreter.Interpreter.Value
+import jupyter.kernel.interpreter.{DisplayData, Interpreter}
 import jupyter.kernel.protocol.{ParsedMessage, ShellReply}
 import jupyter.kernel.protocol.ShellReply.KernelInfo.LanguageInfo
 import jupyter.kernel.server.{ServerApp, ServerAppOptions}
@@ -28,6 +28,11 @@ object PusteeApp {
 
 object PusteeInterpreter extends Interpreter {
 
+  private var scalaRepl : PseudoScala = _
+
+  override def init() : Unit = scalaRepl = new PseudoScala()
+  override def initialized : Boolean = scalaRepl != null
+
   override def languageInfo: ShellReply.KernelInfo.LanguageInfo = LanguageInfo(
     name = "spark-scala",
     version = "0.0.1",
@@ -40,7 +45,7 @@ object PusteeInterpreter extends Interpreter {
                          output: Option[(String => Unit, String => Unit)],
                          storeHistory: Boolean,
                          current: Option[ParsedMessage[_]]
-                        ): Interpreter.Result = NoValue
+                        ): Interpreter.Result = Value(Seq(DisplayData.text(scalaRepl.run(line))))
 
   private var execCounter: Int = 0
 
